@@ -20,7 +20,7 @@ namespace AAndCGamesMainCode
             Console.WriteLine();
             Console.WriteLine("Tryk 1 for at spille Hangman og 2 for at spille sten, saks og papir.");
 
-            string valg = Console.ReadLine();
+            string valg = Console.ReadLine(); ///Giver brugeren valgmulighed mellem to spil
             
 
             if (valg == "1")
