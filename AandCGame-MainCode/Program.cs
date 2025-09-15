@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AAndCGamesMainCode
+namespace AandCGame_MainCode
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Velkommen");
         }
     }
 }
