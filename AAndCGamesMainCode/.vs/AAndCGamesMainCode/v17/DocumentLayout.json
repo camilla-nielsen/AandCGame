@@ -1,7 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\camil\\source\\repos\\camilla-nielsen\\AandCGame\\AAndCGamesMainCode\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\AnnaV\\Desktop\\repos\\AandCGame\\AAndCGamesMainCode\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5D69690E-EDE3-4057-96C6-3A7E97AE31EA}|AAndCGamesMainCode.csproj|c:\\users\\annav\\desktop\\repos\\aandcgame\\aandcgamesmaincode\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5D69690E-EDE3-4057-96C6-3A7E97AE31EA}|AAndCGamesMainCode.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +14,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 222,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\AnnaV\\Desktop\\repos\\AandCGame\\AAndCGamesMainCode\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\AnnaV\\Desktop\\repos\\AandCGame\\AAndCGamesMainCode\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAkwBYAAABbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-15T09:09:01.071Z",
+              "EditorCaption": ""
             }
           ]
         }
