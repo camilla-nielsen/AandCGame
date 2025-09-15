@@ -10,7 +10,8 @@ namespace AAndCGamesMainCode
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Velkommen");
+            Console.WriteLine("Velkommen til");
+            Console.WriteLine("A & C Games");
         }
     }
 }
