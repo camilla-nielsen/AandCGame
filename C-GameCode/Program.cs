@@ -17,30 +17,30 @@ namespace C_GameCode
             har tabt eller vundet, og spilleren får derefter valget om at starte et nyt spil eller afslutte(a), og
             vender derefter retur til hovedmenuen.*/
 
+            //En lille velkomst samt en kort forklaring til spillet,med en blå baggrund og hvid skrift.
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Velkommen til spillet Mini-Hangman");
+            Console.WriteLine();
+            Console.WriteLine("Der skal gættes et ord. Hvert punktum (.) repræsenterer et bogstav i ordet.");
+            Console.WriteLine("Hvis et bogstav gættes korrekt, vil bogstavet erstatte punktummet på den representative plads.");
+            Console.WriteLine("Gættes der på et bogstav som ikke indgår i ordet, mistes der et liv. Der er i alt fire liv.");
+            Console.WriteLine();
+            Console.WriteLine("Tryk Enter for at starte spillet...");
+            Console.ReadKey();
+
+            //Boolsk værdi, der muliggøre en while loop der kører, så længe at spilIgen er true.
             bool spilIgen = true;
 
             //While loop, som er gældende, så længe at "bool spilIgen" er true.
             while (spilIgen)
             {
 
-                //En lille velkomst samt en kort forklaring til spillet,med en blå baggrund og hvid skrift.
-               /*   Console.BackgroundColor = ConsoleColor.DarkBlue;
-                  Console.Clear();
-                  Console.ForegroundColor = ConsoleColor.White; 
-                  Console.WriteLine("Velkommen til spillet Mini-Hangman");
-                  Console.WriteLine();
-                  Console.WriteLine("Der skal gættes et ord. Hvert punktum (.) repræsenterer et bogstav i ordet.");
-                  Console.WriteLine("Hvis et bogstav gættes korrekt, vil bogstavet erstatte punktummet på den representative plads.");
-                  Console.WriteLine("Gættes der på et bogstav som ikke indgår i ordet, mistes der et liv. Der er i alt fire liv.");
-                  Console.WriteLine();
-                  Console.WriteLine("Tryk Enter for at starte spillet...");
-
                   //Clear for at rydde alt tekst og der derved kun er det "rene" spil på skærmen, samt en sort baggrund med hvid skrift. 
-                  Console.ReadLine();
                   Console.BackgroundColor = ConsoleColor.Black;
                   Console.Clear();
-                  Console.ForegroundColor = ConsoleColor.White;*/
-                
+                  Console.ForegroundColor = ConsoleColor.White;
 
                 //Tekst der vises under selve spillet.
                 Console.WriteLine("Mini - Hangman");
@@ -60,36 +60,41 @@ namespace C_GameCode
                 //Variabel der giver spilleren fire liv.
                 int liv = 3;
 
+                //Do while der sørger for at spillet kører, indtil at spilleren enten taber eller vinder.
                 do
                 {
                     //Do while der kører så spilleren kan gætte flere bogstaver. 
                     do
                     {                   
+                        //String svar, hvor spilleren kan taste sit bogstav.
                         svar = Console.ReadLine();
                     } while (string.IsNullOrEmpty(svar));                    
 
                     //Array der styrre bogstaverne i det skjutle ord, for at de kan vises (char)
                     char[] skjultArray = skjult.ToCharArray();
-                    bool found = false; //Tracker om det gættede bogstav er i ordet
+
+                    //Bool der tracker om det gættede bogstav er i ordet
+                    bool found = false; 
 
                     //Sammenligner det tastede bogstav fra spilleren med valgtOrd
                     for (int i = 0; i < valgtOrd.Length; i++)
                     {
-
+                        //"if" karakter(char) for "valgtOrd" og "svar" er ens, bruges denne kodeblok. Begge ord er sat til ToLower, for at de er sammenlignelige
                         if (char.ToLower(valgtOrd[i]) == char.ToLower(svar[0]))
                         {
                             //Viser bogstavet i det valgte ord
                             skjultArray[i] = valgtOrd[i];
 
-                            //Den markeres som fundet via en bool
+                            //Bool som fortæller at karakteren(char) i "svar" er i ordet "valgtOrd". Derved true.
                             found = true;
                         }
                     }
-
                     //Hvis bogstav er korrekt, opdateres "string skjult" med bogstavet
                     Console.Clear();
 
                     //Indtroduktion til spilleren, under hele spillet.
+                    Console.WriteLine("Mini - Hangman");
+                    Console.WriteLine();
                     Console.WriteLine("Indtast et bogstav:");
 
                     skjult = new string(skjultArray);
@@ -116,6 +121,7 @@ namespace C_GameCode
                             Console.WriteLine();
                             Console.WriteLine("Du har tabt! :'( ");
                             Console.WriteLine("Ordet du skulle gætte var: " + valgtOrd);
+                            Console.WriteLine();
                             Console.WriteLine("For at spille igen, tryk Enter, eller tryk a, for at vende tilbage til menuen.");
 
                             //Spilleren kan nu taste, alt efter om der skal spilles igen eller ej.
@@ -139,7 +145,9 @@ namespace C_GameCode
 
                     //Når spilleren har gættet ordet, kommer følgende besked frem
                     Console.WriteLine();
-                    Console.WriteLine("Tillykke! :-) Du har gættet ordet og har dermed vundet!");
+                    Console.WriteLine("Tillykke! :-)");
+                    Console.WriteLine("Du har gættet ordet og har dermed vundet!");
+                    Console.WriteLine();
                     Console.WriteLine("For at spille igen, tryk Enter, eller tryk a, for at vende tilbage til menuen.");
 
                     //Spilleren kan nu taste om der skal spilles igen eller ej.
@@ -150,7 +158,10 @@ namespace C_GameCode
                 }
             }
         }
-        //Funktion som udvælger hvilket ord, som spilleren skal gætte, samt gør ordet skjult.
+        /// <summary>
+        /// Funktion som udvælger hvilket ord, som spilleren skal gætte, samt gør ordet skjult til spillet.
+        /// </summary>
+        /// <returns>Det valgtOrd og det valgteOrd skjult</returns>
         static (string valgtOrd, string skjult) SelectWord()
         {
             //Array med liste af samtlige ord der kan spilles i Hangman.
