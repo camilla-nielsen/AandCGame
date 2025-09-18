@@ -41,7 +41,7 @@ namespace Main
             //String valg, som giver spilleren mulighed for at navigere mellem de to spil.
             string valg = "";
 
-            //Variabel der giver spilleren tre forsøg til at taste 1 eller 2, for at komme i spil.
+            //Variabel der giver spilleren fire forsøg til at taste 1 eller 2, for at komme i spil.
             int forsog = 3;
 
             //While loop, som kører, indtil at spilleren har tastet enten 1 eller 2, for at tilgå det pågældende spil.
@@ -57,7 +57,7 @@ namespace Main
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("Tryk 1 for at spille Hangman og 2 for at spille sten, saks og papir.");
-                Console.WriteLine("Tast q for at lukke programmet.") ;
+                Console.WriteLine("Tast q for at lukke programmet.");
 
                 //Koden læser spillerens tast, både med stort og lille bogstav.
                 valg = Console.ReadLine().ToLower();
@@ -72,14 +72,14 @@ namespace Main
                 //Else if-betingelse som leder spilleren til "StenSaksPapir" funktionen, hvis spilleren har tastet 2.
                 else if (valg == "2")
                 {
-                    Console.Clear();
-                    Console.WriteLine("Sten, saks og papir");
+                    //SpilSSP funktion tilgås.
+                    SpilSSP();
                 }
 
                 //Else if-betingelse som lukker programmet hvis spilleren taster q.
                 else if (valg == "q")
                 {
-                    break;
+                    Environment.Exit(0);
                 }
 
                 //Else-betingelse som fortæller spilleren at deres input er ugyldigt, og de skal taste enten 1 eller 2.
@@ -108,7 +108,7 @@ namespace Main
                 }
             }
 
-            
+
         }
         /// <summary>
         /// Skrevet af Camilla. Indholder koden til spillet hangman.
@@ -172,7 +172,7 @@ namespace Main
                         //String svar, hvor spilleren kan taste sit bogstav.
                         svar = Console.ReadLine();
 
-                      //Betingelse der gør at loop stopper, så snart at "svar" har et eller flere tegn, altså når spilleren har indtastet et tegn.
+                        //Betingelse der gør at loop stopper, så snart at "svar" har et eller flere tegn, altså når spilleren har indtastet et tegn.
                     } while (string.IsNullOrEmpty(svar));
 
                     //Array der konventerer en string til tegn(char), så det spillede ords bogstaver deles ud på et Array.
@@ -277,17 +277,175 @@ namespace Main
         /// </summary>
         /// <returns>Det valgtOrd og det valgteOrd skjult</returns>
         private static (string valgtOrd, string skjult) SelectWord()
+        {
+            //Array med liste af samtlige ord der kan spilles i Hangman.
+            string[] ord = new string[20] { "Hund", "Solsikke", "Telefon", "Computer", "Plante", "Kamera", "Bukser", "Musik", "Morsekode", "Vindue", "Danmark", "Mercedes", "Høretelefoner", "Regnvejr", "Regnbue", "Google", "Skole", "Bentley", "Programmering", "Slange" };
+
+            //Random oprettes, hvor der trækkes et random ord fra "ordArray" til spillet, som laves til en string.
+            Random random = new Random();
+            string valgtOrd = ord[random.Next(ord.Length)];
+
+            // String skjult, skifter bogstaverne i "valgtOrd" ud med punktummer, så det derved er skjult for spilleren.
+            string skjult = new string('.', valgtOrd.Length);
+            return (valgtOrd, skjult);
+        }
+        /// <summary>
+        /// Kodet af Anna. Funktion er hele Sten, saks eller papir-spillet. 
+        /// </summary>
+        static void SpilSSP()
+        {
+            Console.Clear();
+            // Byder velkommen 
+            Console.WriteLine("Velkommen til spillet STEN, SAKS eller PAPIR");
+            Console.WriteLine("Tryk på enter og lad os spille et spil");
+            // Clear skærmen så spillet kan spilles
+            Console.ReadKey();
+            Console.Clear();
+            // Kalder variablerne her for overblik
+            string spillerVaaben = "";
+            int compScore = 0;
+            int spillerScore = 0;
+
+            // En uendelig loop, der kører til break; (når spiller taster 'a')
+            while (true)
             {
-                //Array med liste af samtlige ord der kan spilles i Hangman.
-                string[] ord = new string[20] { "Hund", "Solsikke", "Telefon", "Computer", "Plante", "Kamera", "Bukser", "Musik", "Morsekode", "Vindue", "Danmark", "Mercedes", "Høretelefoner", "Regnvejr", "Regnbue", "Google", "Skole", "Bentley", "Programmering", "Slange" };
+                // Sørger for, at spillet 'sletter' før en ny runde, så gamle tidligere runder ikke ses
+                Console.Clear();
+                // Scoreboard øverst (Er sat ind to gange i loopet, så man hele tiden kan se stillingen med disse to int variabler 
+                Console.WriteLine($"Her er SPILLETS SCOREBOARD: Computeren har {compScore} point. Du har {spillerScore} point");
+                Console.WriteLine();
+                Console.WriteLine("Du skal taste 1 for sten, 2 for saks eller 3 for papir. Ønsker du at afslutte spillet - tast 'a'");
 
-                //Random oprettes, hvor der trækkes et random ord fra "ordArray" til spillet, som laves til en string.
-                Random random = new Random();
-                string valgtOrd = ord[random.Next(ord.Length)];
+                // Sørger for at input altid bliver konverteret til små bogstaver ved output, så svar kan sammenlignes med computerns svar
+                string inputFraSpiller = Console.ReadLine().ToLower();
+                // Her sørger jeg for, at spillet (loopet) kan afsluttes, så det ikke bliver et evighedsloop
+                if (inputFraSpiller == "a")
+                {
+                    //En sluthilsen med et slutresultat
+                    Console.Clear();
+                    Console.WriteLine("Tak for spillet!");
+                    Console.WriteLine($"Computeren har {compScore} point.Du har {spillerScore} point");
 
-                // String skjult, skifter bogstaverne i "valgtOrd" ud med punktummer, så det derved er skjult for spilleren.
-                string skjult = new string('.', valgtOrd.Length);
-                return (valgtOrd, skjult);
+                    if (compScore == spillerScore)
+                    { Console.WriteLine("Spillet endte uafgjort. Tast enter for menu."); }
+
+                    else if (compScore < spillerScore)
+                    { Console.WriteLine("Tillykke! Du vandt spillet. Tast enter for menu."); }
+
+                    else if (compScore > spillerScore)     
+                    { Console.WriteLine("Computeren vandt spillet. Bedre held næste gang. Tast enter for menu."); }
+
+                    Console.ReadKey();
+                    //Skærmen rydes og "static void Menu" kaldes, og spilleren kommer retur til menuen.
+                    Console.Clear();
+                        Menu();                
+                   
+                }
+
+                // Jeg har lavet et array, der har et index med tre ord, som bliver output 
+                string[] brugerVaaben = { "sten", "saks", "papir" };
+                // Her konverteres string til int og tjekker, at input er 1-3
+                if (int.TryParse(inputFraSpiller, out int talValg) && talValg >= 1 && talValg <= 3)
+                {
+                    // Her forbindes indexet med tal-input og spillerens input, så output bliver ord fra indexet. Minus 1 sørger for, at korrekt input til index er 1-3.
+                    spillerVaaben = brugerVaaben[talValg - 1];
+                }
+
+
+
+                Console.Clear();
+                // True hvis spiller indtaster korrekt tal og får følgende output 
+                if (spillerVaaben == "sten" || spillerVaaben == "saks" || spillerVaaben == "papir")
+                {
+                    //Et array bruges til random generator, så computeren vælger et vilkårligt ord fra indexet for hver runde
+                    string[] vaaben = { "sten", "saks", "papir" };
+                    Random rnd = new Random();
+                    string compVaaben = vaaben[rnd.Next(0, vaaben.Length)];
+
+                    //Sørger for at scoreboardet bliver hængende efter endt runde - før ny runde
+                    Console.Clear();
+                    Console.WriteLine($"Her er SPILLETS SCOREBOARD: Computeren har {compScore} point. Du har {spillerScore} point");
+                    Console.WriteLine();
+
+                    //Her afsløres computerens og spillerens valg af våben med string interpolation
+                    Console.WriteLine($"Du har valgt: {spillerVaaben}");
+                    Console.WriteLine($"Computeren valgte: {compVaaben}");
+
+                    //Her afgøres rundens resultat og scoreboard opdateres
+                    //Her kaldes funktion   
+                    string rundeVinder = FindVinder(compVaaben, spillerVaaben);
+                    Console.WriteLine(rundeVinder);
+
+                    //Her kaldes int funktionerne 
+                    compScore = BeregnComputerPoint(compScore, rundeVinder);
+                    spillerScore = BeregnSpillerPoint(spillerScore, rundeVinder);
+
+                    Console.WriteLine("Tast enter for at spille igen");
+                    Console.ReadKey();
+                }
+                //Ved fejltastning sker følgende:
+                else if (spillerVaaben != "a" && inputFraSpiller != "1" && inputFraSpiller != "2" && inputFraSpiller != "3")
+                {
+                    Console.WriteLine("Du tastede forkert. Husk at du kun skal taste '1', '2' eller '3' for at spille og 'a' for at afslutte. Tast enter og prøv igen.");
+                    Console.ReadKey();
+                }
+
             }
+
+            
+
+        }
+        /// <summary>
+        /// Skrevet af Anna. Funktion returnerer en string, der fortæller, hvem der vandt runden
+        /// </summary>
+        /// <param name="compVaaben"></param>
+        /// <param name="spillerVaaben"></param>
+        /// <returns>Resultatet af runden i form af string</returns>
+        static string FindVinder(string compVaaben, string spillerVaaben)
+        {
+            if (compVaaben == spillerVaaben)
+            {
+                return "Uafgjort!";
+            }
+            if ((spillerVaaben == "sten" && compVaaben == "saks") || (spillerVaaben == "papir" && compVaaben == "sten") || (spillerVaaben == "saks" && compVaaben == "papir"))
+            {
+                return "Yay. Du vinder over computeren";
+            }
+            else
+            {
+                return "Desværre. Computeren vinder";
+            }
+        }
+        /// <summary>
+        /// Skrevet af Anna. Int funktion returnerer computerpoint til scoreboard
+        /// </summary>
+        /// <param name="compScore"></param>
+        /// <param name="rundeVinder"></param>
+        /// <returns>computerens point</returns>
+        static int BeregnComputerPoint(int compScore, string rundeVinder)
+        {
+            if (rundeVinder == "Desværre. Computeren vinder")
+            {
+                return (compScore + 1);
+            }
+            else
+            { return compScore; }
+        }
+        /// <summary>
+        /// Skrevet af Anna. int funktion returnerer spillerpoint til scoreboard
+        /// </summary>
+        /// <param name="spillerScore"></param>
+        /// <param name="rundeVinder"></param>
+        /// <returns>spillerens score</returns>
+        static int BeregnSpillerPoint(int spillerScore, string rundeVinder)
+        {
+            if (rundeVinder == "Yay. Du vinder over computeren")
+            {
+                return (spillerScore + 1);
+            }
+            else
+            { return spillerScore; }
+
+        }
     }
 }
