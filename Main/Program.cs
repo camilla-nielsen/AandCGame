@@ -11,7 +11,8 @@ namespace Main
     {
         static void Main(string[] args)
         {
-            /*Hele denne funktion er skrevet af Anna Vognstoft og Camilla Nielsen. SIBDAT25
+            /* SIBDAT25
+             Denne funktion er skrevet af Anna Vognstoft og Camilla Nielsen. 
              Formålet med koden er, at få en velkomst, og når der trykkes Enter, så kommer man videre til selve
              spilmenuen. Fra spilmenuen kan der træffes to valg - enten 1. Hangman eller 2. Sten, saks og papir.
              Når spilleren har truffet sit valg, så ryger man videre til den pågældende funktion, hvor spillet kan spilles.*/
@@ -22,12 +23,14 @@ namespace Main
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Velkommen til");
             Console.WriteLine("A & C Games");
+            Console.WriteLine();
+            Console.WriteLine();
             Console.WriteLine("Tast Enter for at begynde at spille.");
             Console.ReadKey();
             Console.Clear();
 
             /*"Static void Menu" funktionen kaldes, dette for at undgå at når spilleren har spillet et spil, at velkomstskærmen 
-               kommer igen, men at det kun er selve spille menuen som dukker op.*/
+               kommer igen, men at det kun er selve spille-menuen som dukker op.*/
             Menu();
         }
         /// <summary>
@@ -48,30 +51,38 @@ namespace Main
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Vælg mellem disse spil:");
+                Console.WriteLine("Spil-menu:");
                 Console.WriteLine("1. Hangman");
                 Console.WriteLine("2. Sten, saks og papir");
                 Console.WriteLine();
+                Console.WriteLine();
                 Console.WriteLine("Tryk 1 for at spille Hangman og 2 for at spille sten, saks og papir.");
+                Console.WriteLine("Tast q for at lukke programmet.") ;
 
-                //Koden læser spillerens tast.
-                valg = Console.ReadLine();
+                //Koden læser spillerens tast, både med stort og lille bogstav.
+                valg = Console.ReadLine().ToLower();
 
-                //If som leder spilleren til "SpilHangman" funktionen, hvis spilleren har tastet 1.
+                //If-betingelse som leder spilleren til "SpilHangman" funktionen, hvis spilleren har tastet 1.
                 if (valg == "1")
                 {
                     //SpilHangman funktion tilgås.
                     SpilHangman();
                 }
 
-                //Else if som leder spilleren til "StenSaksPapir" funktionen, hvis spilleren har tastet 2.
+                //Else if-betingelse som leder spilleren til "StenSaksPapir" funktionen, hvis spilleren har tastet 2.
                 else if (valg == "2")
                 {
                     Console.Clear();
                     Console.WriteLine("Sten, saks og papir");
                 }
 
-                //Else som fortæller spilleren at deres input er ugyldigt, og de skal taste enten 1 eller 2.
+                //Else if-betingelse som lukker programmet hvis spilleren taster q.
+                else if (valg == "q")
+                {
+                    break;
+                }
+
+                //Else-betingelse som fortæller spilleren at deres input er ugyldigt, og de skal taste enten 1 eller 2.
                 else
                 {
                     Console.Clear();
@@ -82,32 +93,34 @@ namespace Main
                     //Decrement som sørger for, at spilleren mister et forsøg, hver gang der tastes forkert.
                     forsog--;
 
-                    //Hvis forsøg = 0, har spilleren opbrugt sine forsøg for at komme til at spille, og programmet sluttes.
+                    //If-betingelse som kører, hvis spilleren har opbrugt sine forsøg på at komme ind i spille, og programmet sluttes.
                     if (forsog == 0)
                     {
                         //Skærm med en afsluttende besked, med rød skærm og hvid skrift.
                         Console.BackgroundColor = ConsoleColor.DarkRed;
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.WriteLine("Du har opbrugt dine forsøg");
+                        Console.WriteLine("Du har opbrugt dine forsøg, du skal vist ikke spille i dag alligevel...");
 
                         //Programmet lukkes ned.
                         break;
                     }
                 }
             }
+
+            
         }
         /// <summary>
-        /// Indholder koden til spillet hangman. Skrevet af Camilla.
+        /// Skrevet af Camilla. Indholder koden til spillet hangman.
         /// </summary>
         static void SpilHangman()
         {
             /*Hele denne funktion er skrevet af Camilla Nielsen. SIBDAT25
-   Formålet med koden er, at få et spil mini-Hangman op og køre. Koden kører i loop, og stopper efter spilleren
-   har tabt eller vundet, og spilleren får derefter valget om at starte et nyt spil eller afslutte(a), og
-   vender derefter retur til hovedmenuen.*/
+              Formålet med koden er, at få et spil mini-Hangman op og køre. Koden kører i loop, og stopper efter spilleren
+              har tabt eller vundet, og spilleren får derefter valget om at starte et nyt spil eller afslutte(a), og
+              vender derefter retur til hovedmenuen.*/
 
-            //En lille velkomst samt en kort forklaring til spillet,med en blå baggrund og hvid skrift.
+            //En lille velkomst, samt en kort forklaring til spillet,med en blå baggrund og hvid skrift.
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
@@ -135,13 +148,13 @@ namespace Main
                 //Tekst der vises under selve spillet.
                 Console.WriteLine("Mini - Hangman");
                 Console.WriteLine();
-                Console.WriteLine("Indtast et bogstav:");
+                Console.WriteLine("Indtast et bogstav og tryk Enter:");
                 Console.WriteLine();
 
                 //Da min funktion har to variabler, hentes de derfra, således begge er gældende. 
                 var (valgtOrd, skjult) = SelectWord();
 
-                //Skriver ordet der skal gættes.
+                //Udskriver ordet der skal gættes, til en start med punktummer.
                 Console.WriteLine(skjult);
 
                 //String som holder spillerens svar.
@@ -153,29 +166,31 @@ namespace Main
                 //Do while der sørger for at spillet kører, indtil at spilleren enten taber eller vinder.
                 do
                 {
-                    //Do while der kører så spilleren kan gætte flere bogstaver. 
+                    //Do while loop som giver spilleren mulighed for at taste et ny bogstav efter hver runde. 
                     do
                     {
                         //String svar, hvor spilleren kan taste sit bogstav.
                         svar = Console.ReadLine();
+
+                      //Betingelse der gør at loop stopper, så snart at "svar" har et eller flere tegn, altså når spilleren har indtastet et tegn.
                     } while (string.IsNullOrEmpty(svar));
 
-                    //Array der styrre bogstaverne i det skjutle ord, for at de kan vises (char)
+                    //Array der konventerer en string til tegn(char), så det spillede ords bogstaver deles ud på et Array.
                     char[] skjultArray = skjult.ToCharArray();
 
-                    //Bool der tracker om det gættede bogstav er i ordet
+                    //Bool der indikerer at det der ledes efter er false, altså ikke fundet endnu.
                     bool found = false;
 
-                    //Sammenligner det tastede bogstav fra spilleren med valgtOrd
+                    //For-loop som gennemgår valgtOrds bogstaver
                     for (int i = 0; i < valgtOrd.Length; i++)
                     {
-                        //"if" karakter(char) for "valgtOrd" og "svar" er ens, bruges denne kodeblok. Begge ord er sat til ToLower, for at de er sammenlignelige
+                        //En if betingelse, som gennemgår valgtOrds bogstaver [i], med det indstastede svar [0], begge med ToLower, for at undgå fejl. Er de ens, bruges scopet.
                         if (char.ToLower(valgtOrd[i]) == char.ToLower(svar[0]))
                         {
-                            //Viser bogstavet i det valgte ord
+                            //Via skjultArray, findes pladsen af det korrekt gættede bogstav i valgtOrd Array.
                             skjultArray[i] = valgtOrd[i];
 
-                            //Bool som fortæller at karakteren(char) i "svar" er i ordet "valgtOrd". Derved true.
+                            //Bool melde true, altså bogstavet findes i ordet. 
                             found = true;
                         }
                     }
@@ -187,19 +202,20 @@ namespace Main
                     Console.WriteLine();
                     Console.WriteLine("Indtast et bogstav:");
 
+                    //String skjult opdateres via skjultArray, hvis denne er blevet opdateret i for-loop.
                     skjult = new string(skjultArray);
                     Console.WriteLine(skjult);
 
-                    //Hvis(if) det tastede bogstav ikke findes(!found) i ordet, kommer denne boks i spil. 
+                    //En if-betingelse for hvis det gættede bogstav ikke findes i ordet. 
                     if (!found)
                     {
-                        //Decrement som sørger for, at spilleren mister et liv, hver gang der gættes forkert.
+                        //Decrement som sørger for, at spilleren får fratrukket et liv, hver gang der gættes forkert.
                         liv--;
 
-                        //Der angives ud fra "int liv", hvor mange liv der er tilbage.
+                        //Teskt det ud fra "int liv" angiver, hvor mange liv spilleren har tilbage.
                         Console.WriteLine($"Forkert gæt. Du har {liv} liv tilbage.");
 
-                        //Hvis liv = 0, er spillet slut, og spilleren har tabt.
+                        //En if-betingelse som bruges i tilfælde af, at spilleren har opbrugt sine liv.
                         if (liv == 0)
                         {
                             //En rød skærm med hvid skrift.
@@ -207,17 +223,17 @@ namespace Main
                             Console.Clear();
                             Console.ForegroundColor = ConsoleColor.White;
 
-                            //Når spilleren har tabt, kommer følgende besked frem.
+                            //Når spilleren har tabt, kommer følgende besked frem, samt en afsløring af ordet der skulle gættes.
                             Console.WriteLine("Du har tabt! :'( ");
                             Console.WriteLine("Ordet du skulle gætte var: " + valgtOrd);
                             Console.WriteLine();
                             Console.WriteLine("For at spille igen, tryk Enter, eller tryk a, for at vende tilbage til menuen.");
 
                             //Spilleren kan nu taste, alt efter om der skal spilles igen eller ej.
-                            string input = Console.ReadLine();
+                            string taber = Console.ReadLine().ToLower();
 
-                            //Hvis spilleren taster "a", vil de komme retur til spilmenuen.
-                            if (input == "a")
+                            //En if-betingelse hvis spilleren taster "a", da de så kommer retur til menuen.
+                            if (taber == "a")
                             {
                                 //Skærmen rydes og "static void Menu" kaldes, og spilleren kommer retur til menuen.
                                 Console.Clear();
@@ -228,7 +244,7 @@ namespace Main
                     //Forsætter indtil alle bogstaver er gættet, altså så længe at "string skjult" indholder punktummer.
                 } while (skjult.Contains("."));
 
-                //Hvis(if) alle bogstaver er gættet, er alle punktummer væk, så gælder dette ikke(!skjult(Contains(".")) og spillet er derfor vundet.
+                //En if-betingelse hvis spilleren har gættet allt ord, da vil "skjult" ikke længere indeholde punktummer.
                 if (!skjult.Contains("."))
                 {
                     //En grøn skærm, med sort skrift.
@@ -243,10 +259,10 @@ namespace Main
                     Console.WriteLine("For at spille igen, tryk Enter, eller tryk a, for at vende tilbage til menuen.");
 
                     //Spilleren kan nu taste, alt efter om der skal spilles igen eller ej.
-                    string input1 = Console.ReadLine();
+                    string vinder = Console.ReadLine().ToLower();
 
-                    //Hvis spilleren taster "a", vil de komme retur til spilmenuen.
-                    if (input1 == "a")
+                    //En if-betingelse hvis spilleren taster "a", da de så kommer retur til menuen.
+                    if (vinder == "a")
                     {
                         //Skærmen rydes og "static void Menu" kaldes, og spilleren kommer retur til menuen.
                         Console.Clear();
@@ -256,23 +272,22 @@ namespace Main
                 }
             }
         }
-            /// <summary>
-            /// Funktion som udvælger hvilket ord, som spilleren skal gætte, samt gør ordet skjult til spillet. Skrevet af Camilla.
-            /// </summary>
-            /// <returns>Det valgtOrd og det valgteOrd skjult</returns>
-            private static (string valgtOrd, string skjult) SelectWord()
+        /// <summary>
+        /// Skrevet af Camilla. Funktion som udvælger hvilket ord, som spilleren skal gætte, samt gør ordet skjult til spillet. 
+        /// </summary>
+        /// <returns>Det valgtOrd og det valgteOrd skjult</returns>
+        private static (string valgtOrd, string skjult) SelectWord()
             {
                 //Array med liste af samtlige ord der kan spilles i Hangman.
                 string[] ord = new string[20] { "Hund", "Solsikke", "Telefon", "Computer", "Plante", "Kamera", "Bukser", "Musik", "Morsekode", "Vindue", "Danmark", "Mercedes", "Høretelefoner", "Regnvejr", "Regnbue", "Google", "Skole", "Bentley", "Programmering", "Slange" };
 
-                //Random oprettes, hvor der trækkes et random ord fra ordArray til spillet, som laves til en string.
+                //Random oprettes, hvor der trækkes et random ord fra "ordArray" til spillet, som laves til en string.
                 Random random = new Random();
                 string valgtOrd = ord[random.Next(ord.Length)];
 
-                // String skjult, skifter bogstaverne i valgtOrd ud med punktummer, så det derved synes skjult for spilleren.
+                // String skjult, skifter bogstaverne i "valgtOrd" ud med punktummer, så det derved er skjult for spilleren.
                 string skjult = new string('.', valgtOrd.Length);
                 return (valgtOrd, skjult);
             }
-        
     }
 }
