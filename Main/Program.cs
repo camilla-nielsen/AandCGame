@@ -100,10 +100,10 @@ namespace Main
                         Console.BackgroundColor = ConsoleColor.DarkRed;
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.WriteLine("Du har opbrugt dine forsøg, du skal vist ikke spille i dag alligevel...");
+                        Console.WriteLine("Du er vist ikke vågen nu, tag en lur og prøv igen senere...");
 
                         //Programmet lukkes ned.
-                        break;
+                        Environment.Exit(0);
                     }
                 }
             }
